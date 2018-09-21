@@ -52,6 +52,10 @@ const Input = createReactClass({
 
 	propTypes: {
 		/**
+		 * The type of file extension to accept .jpg, .png, .pdf, etc.
+		 */
+		accept: PropTypes.string,
+		/**
 		 * The aria-activedescendant attribute contains the ID of the currently active child object that is part of a composite widget within the Document Object Model. It makes do with the overhead of having all or more than one child focusable. As the name specifies, it helps in managing the current active child of the composite widget.
 		 */
 		'aria-activedescendant': PropTypes.string,
@@ -234,6 +238,10 @@ const Input = createReactClass({
 		 */
 		maxLength: PropTypes.string,
 		/**
+		 * Sets whether or not multiple files can be uploaded
+		 */
+		multiple: PropTypes.bool,
+		/**
 		 * Name of the submitted form parameter.
 		 */
 		name: PropTypes.string,
@@ -267,6 +275,9 @@ const Input = createReactClass({
 			'search',
 			'tel',
 			'color',
+			'file',
+			'image',
+			'video',
 		]),
 		/**
 		 * The input is a controlled component, and will always display this value.
@@ -398,6 +409,7 @@ const Input = createReactClass({
 				/>
 				{fieldLevelHelpTooltip}
 				<InnerInput
+					accept={this.props.accept}
 					aria-activedescendant={this.props['aria-activedescendant']}
 					aria-autocomplete={this.props['aria-autocomplete']}
 					aria-controls={this.props['aria-controls']}
@@ -424,6 +436,7 @@ const Input = createReactClass({
 					isStatic={this.props.isStatic}
 					minLength={this.props.minLength}
 					maxLength={this.props.maxLength}
+					multiple={this.props.multiple}
 					name={this.props.name}
 					onBlur={this.props.onBlur}
 					onChange={this.props.onChange}

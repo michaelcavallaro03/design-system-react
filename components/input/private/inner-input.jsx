@@ -173,6 +173,7 @@ const propTypes = {
 		'search',
 		'tel',
 		'color',
+		'file',
 	]),
 	/**
 	 * The input is a controlled component, and will always display this value.
@@ -229,6 +230,7 @@ const InnerInput = (props) => {
 
 			{!props.isStatic && (
 				<input
+					accept={props.accept}
 					aria-activedescendant={props['aria-activedescendant']}
 					aria-autocomplete={props['aria-autocomplete']}
 					aria-controls={props['aria-controls']}
@@ -247,6 +249,7 @@ const InnerInput = (props) => {
 					id={props.id}
 					minLength={props.minLength}
 					maxLength={props.maxLength}
+					multiple={props.accept}
 					name={props.name}
 					onBlur={props.onBlur}
 					onChange={props.onChange}

@@ -10,6 +10,7 @@ import InputIcon from '../../icon/input-icon';
 
 import InlineHelpInput from '../__examples__/inline-help';
 import FieldLevelHelpInput from '../__examples__/field-level-help';
+import FileInputExample from '../__examples__/fileinput';
 
 const iconClicked = action;
 
@@ -261,4 +262,5 @@ storiesOf(INPUT, module)
 	.add('Field Level Help', () => <FieldLevelHelpInput />)
 	.add('Field Level Help, Tooltip Open', () => (
 		<FieldLevelHelpInput tooltipOpen />
-	));
+	))
+	.add('FileInput ', () => <FileInputExample />);
