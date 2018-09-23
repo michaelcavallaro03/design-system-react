@@ -174,6 +174,8 @@ const propTypes = {
 		'tel',
 		'color',
 		'file',
+		'video',
+		'image',
 	]),
 	/**
 	 * The input is a controlled component, and will always display this value.
@@ -209,7 +211,7 @@ const InnerInput = (props) => {
 		...defaultProps.assistiveText,
 		...props.assistiveText,
 	};
-
+	const isFileSelector = props.type === 'file' || props.type==='image' || props.type === 'video';
 	return (
 		<div
 			className={classNames(containerClassName, {
@@ -227,54 +229,68 @@ const InnerInput = (props) => {
 			{props.fixedTextLeft && (
 				<span className="slds-form-element__addon">{props.fixedTextLeft}</span>
 			)}
-
-			{!props.isStatic && (
-				<input
-					accept={props.accept}
-					aria-activedescendant={props['aria-activedescendant']}
-					aria-autocomplete={props['aria-autocomplete']}
-					aria-controls={props['aria-controls']}
-					aria-labelledby={props['aria-labelledby']}
-					aria-describedby={
-						props.hasSpinner
-							? `loading-status-icon ${props['aria-describedby']}`
-							: props['aria-describedby']
-					}
-					aria-expanded={props['aria-expanded']}
-					aria-owns={props['aria-owns']}
-					aria-required={props['aria-required']}
-					autoComplete={props.autoComplete}
-					className={classNames('slds-input', props.className)}
-					disabled={props.disabled}
-					id={props.id}
-					minLength={props.minLength}
-					maxLength={props.maxLength}
-					multiple={props.accept}
-					name={props.name}
-					onBlur={props.onBlur}
-					onChange={props.onChange}
-					onClick={props.onClick}
-					onFocus={props.onFocus}
-					onInput={props.onInput}
-					onInvalid={props.onInvalid}
-					onKeyDown={props.onKeyDown}
-					onKeyPress={props.onKeyPress}
-					onKeyUp={props.onKeyUp}
-					onSelect={props.onSelect}
-					onSubmit={props.onSubmit}
-					placeholder={props.placeholder}
-					readOnly={props.readOnly}
-					ref={props.inputRef}
-					required={props.required}
-					role={props.role}
-					style={props.style}
-					tabIndex={props.tabIndex}
-					type={props.type}
-					value={props.value}
-					defaultValue={props.defaultValue}
-				/>
+			<span className="slds-form-element__label" id="file-selector-primary-label">{props.label}</span>
+			<div className="slds-file-selector__dropzone">
+				{!props.isStatic && (
+					<input
+						accept={props.accept}
+						aria-activedescendant={props['aria-activedescendant']}
+						aria-autocomplete={props['aria-autocomplete']}
+						aria-controls={props['aria-controls']}
+						aria-labelledby={props['aria-labelledby']}
+						aria-describedby={
+							props.hasSpinner
+								? `loading-status-icon ${props['aria-describedby']}`
+								: props['aria-describedby']
+						}
+						aria-expanded={props['aria-expanded']}
+						aria-owns={props['aria-owns']}
+						aria-required={props['aria-required']}
+						autoComplete={props.autoComplete}
+						className={classNames('slds-input', props.className)}
+						disabled={props.disabled}
+						id={props.id}
+						minLength={props.minLength}
+						maxLength={props.maxLength}
+						multiple={props.multiple}
+						name={props.name}
+						onBlur={props.onBlur}
+						onChange={props.onChange}
+						onClick={props.onClick}
+						onFocus={props.onFocus}
+						onInput={props.onInput}
+						onInvalid={props.onInvalid}
+						onKeyDown={props.onKeyDown}
+						onKeyPress={props.onKeyPress}
+						onKeyUp={props.onKeyUp}
+						onSelect={props.onSelect}
+						onSubmit={props.onSubmit}
+						placeholder={props.placeholder}
+						readOnly={props.readOnly}
+						ref={props.inputRef}
+						required={props.required}
+						role={props.role}
+						style={{display: "none"}}
+						tabIndex={props.tabIndex}
+						type={props.type}
+						value={props.value}
+						defaultValue={props.defaultValue}
+					/>
+				)}
+			{isFileSelector && (
+				<label className="slds-file-selector__body"  id="file-selector-secondary-label" htmlFor={props.id}>
+					<span className={classNames('slds-file-selector__button', 'slds-button', 'slds-button_neutral')}>
+						<svg
+							className={classNames('slds-button__icon', 'slds-button__icon_left')}
+							aria-hidden="true"
+							xmlns="http://www.w3.org/1999/xlink"
+							xmlnsHref="/assets/icons/utility-sprite/svg/symbols.svg#upload"
+						/> Upload Files
+					</span>
+					<span className={classNames('slds-file-selector__text', 'slds-medium-show')}>or Drop Files</span>
+				</label>
 			)}
-
+			</div>
 			{props.hasSpinner ? (
 				<div className="slds-input__icon-group slds-input__icon-group_right">
 					{props.hasSpinner && (

@@ -419,7 +419,7 @@ const Input = createReactClass({
 					aria-owns={this.props['aria-owns']}
 					aria-required={this.props['aria-required']}
 					containerProps={{
-						className: 'slds-form-element__control',
+						className: classNames('slds-form-element__control','slds-file-selector', 'slds-file-selector_files'),
 					}}
 					defaultValue={this.props.defaultValue}
 					disabled={this.props.disabled}
