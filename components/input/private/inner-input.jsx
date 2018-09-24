@@ -69,6 +69,10 @@ const propTypes = {
 	 */
 	disabled: PropTypes.bool,
 	/**
+	 * Enables drop zone for file input
+	 */
+	dropzone: PropTypes.bool,
+	/**
 	 * Displays text or node to the left of the input. This follows the fixed text input UX pattern.
 	 */
 	fixedTextLeft: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
@@ -219,7 +223,6 @@ const InnerInput = (props) => {
 
 	let isFileSelector = false;
 	let defaultUploadButtonText = '';
-
 	switch (props.type) {
 		case 'file':
 			isFileSelector = true;
@@ -252,15 +255,15 @@ const InnerInput = (props) => {
 				'slds-has-divider_bottom': props.isStatic,
 				'slds-file-selector': isFileSelector,
 				'slds-file-selector_files': isFileSelector,
-				'slds-file-selector__dropzone': isFileSelector,
+				'slds-file-selector__dropzone': props.dropzone,
+				'slds-has-drag-over': props.dropzone,
 			})}
 			{...containerProps}
 		>
-			{props.iconLeft && props.iconLeft}
+			{!isFileSelector && props.iconLeft && props.iconLeft}
 			{props.fixedTextLeft && (
 				<span className="slds-form-element__addon">{props.fixedTextLeft}</span>
 			)}
-			<span className="slds-form-element__label" id="file-selector-primary-label">{props.label}</span>
 			{!props.isStatic && (
 				<input
 					accept={props.accept}
@@ -300,7 +303,7 @@ const InnerInput = (props) => {
 					ref={props.inputRef}
 					required={props.required}
 					role={props.role}
-					style={isFileSelector ? {display: "none", ...props.style} : props.style}
+					style={{}} //isFileSelector ? {display: "none", ...props.style} : props.style}
 					tabIndex={props.tabIndex}
 					type={props.type}
 					value={props.value}
@@ -308,11 +311,12 @@ const InnerInput = (props) => {
 				/>
 			)}
 			{isFileSelector && (
-				<label className="slds-file-selector__body"  id="file-selector-secondary-label" htmlFor={props.id}>
+				<label className="slds-file-selector__body " id="file-selector-secondary-label" htmlFor={props.id}>
 					<span className={classNames('slds-file-selector__button', 'slds-button', 'slds-button_neutral')}>
+					    <div className={classNames('slds-button__icon', 'slds-button__icon_left')}>{props.iconLeft}</div>
 						{props.uploadButtonText === '' ? defaultUploadButtonText : props.uploadButtonText}
 					</span>
-					<span className={classNames('slds-file-selector__text', 'slds-medium-show')}>or Drop Files</span>
+					{props.dropzone && <span className={classNames('slds-file-selector__text', 'slds-medium-show')}>{props.multiple ? 'or Drop Files' : 'or Drop File'}</span>}
 				</label>
 			)}
 			{props.hasSpinner ? (

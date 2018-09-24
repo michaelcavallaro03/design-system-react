@@ -134,6 +134,10 @@ const Input = createReactClass({
 		 */
 		disabled: PropTypes.bool,
 		/**
+		 * Enables drop zone for file input
+		 */
+		dropzone: PropTypes.bool,
+		/**
 		 * Message to display when the input is in an error state. When this is present, also visually highlights the component as in error.
 		 */
 		errorText: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
@@ -354,6 +358,7 @@ const Input = createReactClass({
 		return icon;
 	},
 
+
 	render() {
 		// Remove at next breaking change
 		// this is a hack to make left the default prop unless overwritten by `iconPosition="right"`
@@ -427,6 +432,7 @@ const Input = createReactClass({
 					}}
 					defaultValue={this.props.defaultValue}
 					disabled={this.props.disabled}
+					dropzone={this.props.dropzone}
 					fixedTextLeft={this.props.fixedTextLeft}
 					fixedTextRight={this.props.fixedTextRight}
 					hasSpinner={this.props.hasSpinner}
