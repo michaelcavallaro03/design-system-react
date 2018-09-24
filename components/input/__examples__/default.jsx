@@ -14,7 +14,7 @@ const Example = createReactClass({
 						<h1 className="slds-text-title_caps slds-p-vertical_medium">
 							Base Input with visible label
 						</h1>
-						<Input id="base-id" label="My Label" placeholder="My placeholder" />
+						<Input id="base-id" label="My Label" assistiveText="das" placeholder="My placeholder" />
 					</div>
 					<div className="slds-col_padded">
 						<h1 className="slds-text-title_caps slds-p-vertical_medium">
