@@ -280,6 +280,10 @@ const Input = createReactClass({
 			'video',
 		]),
 		/**
+		 * The text to be used on the upload files button, default value depends on file/files/images/videos
+		 */
+		uploadButtonText: PropTypes.string,
+		/**
 		 * The input is a controlled component, and will always display this value.
 		 */
 		value: PropTypes.string,
@@ -456,6 +460,7 @@ const Input = createReactClass({
 					role={this.props.role}
 					assistiveText={this.props.assistiveText}
 					type={this.props.type}
+					uploadButtonText={this.props.uploadButtonText}
 					value={this.props.value}
 				/>
 				{this.props.errorText && (

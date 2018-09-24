@@ -263,4 +263,4 @@ storiesOf(INPUT, module)
 	.add('Field Level Help, Tooltip Open', () => (
 		<FieldLevelHelpInput tooltipOpen />
 	))
-	.add('FileInput ', () => <FileInputExample />);
+	.add('File Input', () => <FileInputExample />);
