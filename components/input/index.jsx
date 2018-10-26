@@ -399,6 +399,8 @@ const Input = createReactClass({
 			fieldLevelHelpTooltip = <Tooltip {...tooltipProps} />;
 		}
 
+		const isFileInput = this.props.type === 'file' || this.props.type === 'image' || this.props.type === 'video' ;
+
 		return (
 			<div
 				className={classNames(
@@ -428,7 +430,7 @@ const Input = createReactClass({
 					aria-owns={this.props['aria-owns']}
 					aria-required={this.props['aria-required']}
 					containerProps={{
-						className: classNames('slds-form-element__control','slds-file-selector', 'slds-file-selector_files'),
+						className: classNames('slds-form-element__control'),
 					}}
 					defaultValue={this.props.defaultValue}
 					disabled={this.props.disabled}
@@ -469,6 +471,7 @@ const Input = createReactClass({
 					uploadButtonText={this.props.uploadButtonText}
 					value={this.props.value}
 				/>
+
 				{this.props.errorText && (
 					<div id={this.getErrorId()} className="slds-form-element__help">
 						{this.props.errorText}

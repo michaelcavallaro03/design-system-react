@@ -69,10 +69,6 @@ const propTypes = {
 	 */
 	disabled: PropTypes.bool,
 	/**
-	 * Enables drop zone for file input
-	 */
-	dropzone: PropTypes.bool,
-	/**
 	 * Displays text or node to the left of the input. This follows the fixed text input UX pattern.
 	 */
 	fixedTextLeft: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
@@ -177,9 +173,9 @@ const propTypes = {
 		'search',
 		'tel',
 		'color',
-		'file',
-		'video',
 		'image',
+		'video',
+		'file',
 	]),
 	/**
 	 * The text to be used on the upload files button, default value depends on file/files/images/videos
@@ -207,6 +203,7 @@ const defaultProps = {
 	uploadButtonText: '',
 };
 
+
 /*
  * This component was created to allow the DIV wrapped input to be used within other components such as combobox. This components API is not public.
  */
@@ -221,28 +218,8 @@ const InnerInput = (props) => {
 		...props.assistiveText,
 	};
 
-	let isFileSelector = false;
-	let defaultUploadButtonText = '';
-	switch (props.type) {
-		case 'file':
-			isFileSelector = true;
-			defaultUploadButtonText = 'Upload File';
-			break;
-		case 'image':
-			isFileSelector = true;
-			defaultUploadButtonText = 'Upload Image';
-			break;
-		case 'video':
-			isFileSelector = true;
-			defaultUploadButtonText = 'Upload Video';
-			break;
-		default:
-			isFileSelector = false;
-			defaultUploadButtonText = '';
-			break;
+	const isFileInput = props.type === 'file' || props.type === 'image' || props.type === 'video';
 
-	}
-	defaultUploadButtonText += props.multiple ? 's' : '';
 	return (
 		<div
 			className={classNames(containerClassName, {
@@ -253,72 +230,65 @@ const InnerInput = (props) => {
 				'slds-input-has-fixed-addon':
 					props.fixedTextLeft || props.fixedTextRight,
 				'slds-has-divider_bottom': props.isStatic,
-				'slds-file-selector': isFileSelector,
-				'slds-file-selector_files': isFileSelector,
-				'slds-file-selector__dropzone': props.dropzone,
-				'slds-has-drag-over': props.dropzone,
 			})}
 			{...containerProps}
 		>
-			{!isFileSelector && props.iconLeft && props.iconLeft}
+			{props.iconLeft && props.iconLeft}
 			{props.fixedTextLeft && (
 				<span className="slds-form-element__addon">{props.fixedTextLeft}</span>
 			)}
-			{!props.isStatic && (
-				<input
-					accept={props.accept}
-					aria-activedescendant={props['aria-activedescendant']}
-					aria-autocomplete={props['aria-autocomplete']}
-					aria-controls={props['aria-controls']}
-					aria-labelledby={props['aria-labelledby']}
-					aria-describedby={
-						props.hasSpinner
-							? `loading-status-icon ${props['aria-describedby']}`
-							: props['aria-describedby']
+			<div className={classNames('slds-file-selector', 'slds-file-selector_files')}>
+				<div className="slds-file-selector__dropzone">
+					{!props.isStatic &&
+						<input
+							accept="image/png"
+							aria-activedescendant={props['aria-activedescendant']}
+							aria-autocomplete={props['aria-autocomplete']}
+							aria-controls={props['aria-controls']}
+							aria-labelledby="secondary-label"
+							aria-describedby={
+								props.hasSpinner
+									? `loading-status-icon ${props['aria-describedby']}`
+									: props['aria-describedby']
+								}
+							aria-expanded={props['aria-expanded']}
+							aria-owns={props['aria-owns']}
+							aria-required={props['aria-required']}
+							autoComplete={props.autoComplete}
+							className={classNames(props.className, isFileInput ? 'slds-file-selector__input' : '', isFileInput ? 'slds-assistive-text' : '')}
+							disabled={props.disabled}
+							id={props.id}
+							minLength={props.minLength}
+							maxLength={props.maxLength}
+							name={props.name}
+							onBlur={props.onBlur}
+							onChange={props.onChange}
+							onFocus={props.onFocus}
+							onInput={props.onInput}
+							onInvalid={props.onInvalid}
+							onKeyDown={props.onKeyDown}
+							onKeyPress={props.onKeyPress}
+							onKeyUp={props.onKeyUp}
+							onSelect={props.onSelect}
+							onSubmit={props.onSubmit}
+							placeholder={props.placeholder}
+							readOnly={props.readOnly}
+							ref={props.inputRef}
+							required={props.required}
+							role={props.role}
+							style={{}}	//isFileSelector ? {display: "none", ...props.style} : props.style}
+							tabIndex={props.tabIndex}
+							type={props.type}
+							value={props.value}
+							defaultValue={props.defaultValue}
+						/>
 					}
-					aria-expanded={props['aria-expanded']}
-					aria-owns={props['aria-owns']}
-					aria-required={props['aria-required']}
-					autoComplete={props.autoComplete}
-					className={classNames('slds-input', props.className)}
-					disabled={props.disabled}
-					id={props.id}
-					minLength={props.minLength}
-					maxLength={props.maxLength}
-					multiple={props.multiple}
-					name={props.name}
-					onBlur={props.onBlur}
-					onChange={props.onChange}
-					onClick={props.onClick}
-					onFocus={props.onFocus}
-					onInput={props.onInput}
-					onInvalid={props.onInvalid}
-					onKeyDown={props.onKeyDown}
-					onKeyPress={props.onKeyPress}
-					onKeyUp={props.onKeyUp}
-					onSelect={props.onSelect}
-					onSubmit={props.onSubmit}
-					placeholder={props.placeholder}
-					readOnly={props.readOnly}
-					ref={props.inputRef}
-					required={props.required}
-					role={props.role}
-					style={{}} //isFileSelector ? {display: "none", ...props.style} : props.style}
-					tabIndex={props.tabIndex}
-					type={props.type}
-					value={props.value}
-					defaultValue={props.defaultValue}
-				/>
-			)}
-			{isFileSelector && (
-				<label className="slds-file-selector__body " id="file-selector-secondary-label" htmlFor={props.id}>
-					<span className={classNames('slds-file-selector__button', 'slds-button', 'slds-button_neutral')}>
-					    <div className={classNames('slds-button__icon', 'slds-button__icon_left')}>{props.iconLeft}</div>
-						{props.uploadButtonText === '' ? defaultUploadButtonText : props.uploadButtonText}
-					</span>
-					{props.dropzone && <span className={classNames('slds-file-selector__text', 'slds-medium-show')}>{props.multiple ? 'or Drop Files' : 'or Drop File'}</span>}
-				</label>
-			)}
+					<label className="slds-file-selector__body" htmlFor={props.id} id="secondary-label">
+							<span className={classNames('slds-file-selector__button', 'slds-button','slds-button_neutral')}>Upload Files</span>
+							<span className={classNames('slds-file-selector__text',' slds-medium-show')}>or Drop Files</span>
+					</label>
+				</div>
+			</div>
 			{props.hasSpinner ? (
 				<div className="slds-input__icon-group slds-input__icon-group_right">
 					{props.hasSpinner && (
